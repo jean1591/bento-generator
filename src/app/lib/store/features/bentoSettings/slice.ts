@@ -15,7 +15,7 @@ export interface BentoSettingsState {
 }
 
 const initialState: BentoSettingsState = {
-  bento: generateEmptyBento(3, 3),
+  bento: generateEmptyBento(4, 4),
   selectedCellOne: null,
   selectedCellTwo: null,
 };
