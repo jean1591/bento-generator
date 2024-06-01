@@ -6,10 +6,12 @@ import {
   setBento,
 } from "./lib/store/features/bentoSettings/slice";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 import { RootState } from "./lib/store/store";
 import { cloneDeep } from "lodash";
-import { useState } from "react";
+
+// TODO: full line [0, 0] not handled
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -17,6 +19,15 @@ export default function Home() {
 
   const [cellOne, setCellOne] = useState<CellCoordinates | null>(null);
   const [cellTwo, setCellTwo] = useState<CellCoordinates | null>(null);
+  const [buttonDisabled, setButtonDisabled] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (cellOne && cellTwo) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [cellOne, cellTwo]);
 
   const handleCellOnClick = (rowIndex: number, columnIndex: number) => {
     const isSelectedCellOne = isCellCurrentCell(cellOne, rowIndex, columnIndex);
@@ -52,17 +63,14 @@ export default function Home() {
       return;
     }
 
-    // Find most up left cell
-    let cellToUpdate = cellOne;
-    let cellToHide = cellTwo;
-
-    if (
-      cellOne?.columnIndex ** 2 + cellOne?.rowIndex ** 2 >
-      cellTwo?.columnIndex ** 2 + cellTwo?.rowIndex ** 2
-    ) {
-      cellToUpdate = cellTwo;
-      cellToHide = cellOne;
-    }
+    const cellToUpdate: CellCoordinates = {
+      rowIndex: Math.min(cellOne?.rowIndex, cellTwo?.rowIndex),
+      columnIndex: Math.min(cellOne?.columnIndex, cellTwo?.columnIndex),
+    };
+    const cellToHide: CellCoordinates = {
+      rowIndex: Math.max(cellOne?.rowIndex, cellTwo?.rowIndex),
+      columnIndex: Math.max(cellOne?.columnIndex, cellTwo?.columnIndex),
+    };
 
     const updatedBento = cloneDeep(bento);
 
@@ -74,9 +82,7 @@ export default function Home() {
       cellToHide.rowIndex - cellToUpdate.rowIndex + 1,
       1
     );
-    console.log("🚀", { cellToUpdate, cellToHide });
 
-    // TODO: does not work for (3, 0) - (2, 2)
     for (let row = cellToUpdate.rowIndex; row <= cellToHide.rowIndex; row++) {
       for (
         let column = cellToUpdate.columnIndex;
@@ -91,6 +97,7 @@ export default function Home() {
       updatedWidth,
     ];
 
+    console.log("🚀 ~ updatedBento:", updatedBento);
     dispatch(setBento(updatedBento));
 
     setCellOne(null);
@@ -103,8 +110,9 @@ export default function Home() {
     <div className="mt-20">
       <div className="flex items-center justify-center">
         <button
+          disabled={buttonDisabled}
           className={classNames(
-            cellOne && cellTwo ? "bg-blue-800" : "bg-slate-400",
+            buttonDisabled ? "bg-slate-400" : "bg-blue-800",
             "text-center text-slate-200 px-7 py-3 rounded-lg"
           )}
           onClick={handleMerge}
@@ -130,7 +138,7 @@ export default function Home() {
                   onClick={() => handleCellOnClick(rowIndex, columnIndex)}
                 >
                   <p className="text-center text-black">
-                    {`(${columnIndex}, ${rowIndex})`}
+                    {`P(${columnIndex}, ${rowIndex}) - S(${size[0]}, ${size[1]})`}
                   </p>
                 </div>
               );
@@ -143,14 +151,14 @@ export default function Home() {
 }
 
 const isCellCurrentCell = (
-  firstCell: CellCoordinates | null,
+  cell: CellCoordinates | null,
   rowIndex: number,
   columnIndex: number
 ): boolean => {
   return (
-    firstCell !== null &&
-    firstCell.columnIndex === columnIndex &&
-    firstCell.rowIndex === rowIndex
+    cell !== null &&
+    cell.columnIndex === columnIndex &&
+    cell.rowIndex === rowIndex
   );
 };
 
