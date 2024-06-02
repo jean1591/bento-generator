@@ -87,3 +87,43 @@ export const isCellOneSelectedAndNotCellTwo = (
       bento[selectedCellOne.rowIndex][selectedCellOne.columnIndex][1] !== 1)
   );
 };
+
+export const isCellCurrentCell = (
+  cell: CellCoordinates | null,
+  rowIndex: number,
+  columnIndex: number
+): boolean => {
+  return (
+    cell !== null &&
+    cell.columnIndex === columnIndex &&
+    cell.rowIndex === rowIndex
+  );
+};
+
+export const canDeleteLastColumn = (bento: Bento): boolean => {
+  for (let row of bento) {
+    const lastRowCell = row.at(-1);
+
+    if (isNil(lastRowCell) || (lastRowCell[0] === 0 && lastRowCell[1] === 0)) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+export const canDeleteLastRow = (bento: Bento): boolean => {
+  const lastRow = bento.at(-1);
+
+  if (isNil(lastRow)) {
+    return false;
+  }
+
+  for (let lastRowCell of lastRow) {
+    if (lastRowCell[0] === 0 && lastRowCell[1] === 0) {
+      return false;
+    }
+  }
+
+  return true;
+};

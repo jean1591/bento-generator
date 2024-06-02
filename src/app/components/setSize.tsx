@@ -1,3 +1,4 @@
+import { canDeleteLastColumn, canDeleteLastRow } from "@/utils";
 import {
   setBento,
   setColumnNumber,
@@ -9,8 +10,6 @@ import { Button } from "./button";
 import { RootState } from "../lib/store/store";
 import { cloneDeep } from "lodash";
 
-// TODO: cannot delete row or column with merge cells without fucking up the bento
-
 export const SetColumnsNumber = () => {
   const dispatch = useDispatch();
   const { bento, columnNumber } = useSelector(
@@ -19,14 +18,18 @@ export const SetColumnsNumber = () => {
 
   const handleColumnChange = (direction: "-" | "+") => {
     if (direction === "-") {
-      dispatch(setColumnNumber(columnNumber - 1));
+      if (canDeleteLastColumn(bento)) {
+        dispatch(setColumnNumber(columnNumber - 1));
 
-      const updatedBento = cloneDeep(bento);
-      for (let rowIndex = 0; rowIndex < updatedBento.length; rowIndex++) {
-        updatedBento[rowIndex].pop();
+        const updatedBento = cloneDeep(bento);
+        for (let rowIndex = 0; rowIndex < updatedBento.length; rowIndex++) {
+          updatedBento[rowIndex].pop();
+        }
+
+        dispatch(setBento(updatedBento));
+      } else {
+        console.log("Cannot delete column");
       }
-
-      dispatch(setBento(updatedBento));
     }
 
     if (direction === "+") {
@@ -66,12 +69,16 @@ export const SetRowsNumber = () => {
 
   const handleRowChange = (direction: "-" | "+") => {
     if (direction === "-") {
-      dispatch(setRowNumber(rowNumber - 1));
+      if (canDeleteLastRow(bento)) {
+        dispatch(setRowNumber(rowNumber - 1));
 
-      const updatedBento = cloneDeep(bento);
-      updatedBento.pop();
+        const updatedBento = cloneDeep(bento);
+        updatedBento.pop();
 
-      dispatch(setBento(updatedBento));
+        dispatch(setBento(updatedBento));
+      } else {
+        console.log("Cannot delete row");
+      }
     }
 
     if (direction === "+") {

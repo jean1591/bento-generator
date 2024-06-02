@@ -1,4 +1,4 @@
-import { CellCoordinates, classNames } from "@/utils";
+import { CellCoordinates, classNames, isCellCurrentCell } from "@/utils";
 import {
   setMergeButtonDisable,
   setSelectedCellOne,
@@ -133,17 +133,5 @@ const classNamesGenerator = (
       ? "border-green-100 bg-green-200 shadow-2xl"
       : "",
     "border min-h-20 transition ease-in-out duration-500 rounded-lg border-blue-100 bg-blue-200 shadow-sm"
-  );
-};
-
-const isCellCurrentCell = (
-  cell: CellCoordinates | null,
-  rowIndex: number,
-  columnIndex: number
-): boolean => {
-  return (
-    cell !== null &&
-    cell.columnIndex === columnIndex &&
-    cell.rowIndex === rowIndex
   );
 };
