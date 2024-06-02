@@ -31,15 +31,17 @@ export const Toast = () => {
               <div className="p-4">
                 <div className="flex items-start">
                   <div className="w-0 flex-1 pt-0.5">
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium text-base-content-500">
                       An error occured 😱
                     </p>
-                    <p className="mt-1 text-sm text-gray-500">{errorMessage}</p>
+                    <p className="mt-1 text-sm text-base-content-300">
+                      {errorMessage}
+                    </p>
                   </div>
                   <div className="ml-4 flex flex-shrink-0">
                     <button
                       type="button"
-                      className="inline-flex rounded-md bg-red-100 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      className="inline-flex rounded-md bg-red-100 text-base-content-300 hover:text-base-content-500"
                       onClick={() => {
                         dispatch(setDisplayToast(false));
                       }}

@@ -80,7 +80,7 @@ export const Bento = () => {
         columnNumber === 6 ? "grid-cols-6" : "",
         columnNumber === 7 ? "grid-cols-7" : "",
         columnNumber === 8 ? "grid-cols-8" : "",
-        "mt-20 grid gap-5"
+        "grid gap-4"
       )}
     >
       {bento.map((row, rowIndex) =>
@@ -98,7 +98,7 @@ export const Bento = () => {
                 )}
                 onClick={() => handleCellOnClick(rowIndex, columnIndex)}
               >
-                <p className="text-center text-black"></p>
+                <p className="text-center text-base-content-500"></p>
               </div>
             );
           }
@@ -124,12 +124,10 @@ const classNamesGenerator = (
     size[1] === 4 ? "row-span-4" : "",
     size[1] === 3 ? "row-span-3" : "",
     size[1] === 2 ? "row-span-2" : "",
-    isCellCurrentCell(cellOne, rowIndex, columnIndex)
-      ? "border-red-100 bg-red-200 shadow-2xl"
-      : "",
-    isCellCurrentCell(cellTwo, rowIndex, columnIndex)
-      ? "border-green-100 bg-green-200 shadow-2xl"
-      : "",
-    "border min-h-20 transition ease-in-out duration-500 rounded-lg border-blue-100 bg-blue-200 shadow-sm"
+    isCellCurrentCell(cellOne, rowIndex, columnIndex) ||
+      isCellCurrentCell(cellTwo, rowIndex, columnIndex)
+      ? "bg-primary-500 shadow-2xl"
+      : "bg-primary-200 shadow-sm",
+    "min-h-20 transition ease-in-out duration-500 rounded-lg"
   );
 };
