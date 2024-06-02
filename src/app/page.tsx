@@ -1,11 +1,11 @@
 "use client";
 
+import { SetColumnsNumber, SetRowsNumber } from "./components/setSize";
 import {
-  RestoreCells,
   isCellOneSelectedAndNotCellTwo,
   mergeCells,
+  restoreCells,
 } from "@/utils";
-import { SetColumnsNumber, SetRowsNumber } from "./components/setSize";
 import {
   setBento,
   setSelectedCellOne,
@@ -43,7 +43,7 @@ export default function Home() {
 
     if (canRestoreCells) {
       // @ts-expect-error selectedCellOne !== null checked in isCellOneSelectedAndNotCellTwo
-      const updatedBento = RestoreCells(bento, selectedCellOne);
+      const updatedBento = restoreCells(bento, selectedCellOne);
 
       dispatch(setBento(updatedBento));
       resetSelectedCells();
