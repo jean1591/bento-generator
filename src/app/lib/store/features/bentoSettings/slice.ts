@@ -1,12 +1,7 @@
-import { Bento, generateEmptyBento } from "@/utils";
+import { Bento, CellCoordinates, generateEmptyBento } from "@/utils";
 
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { createSlice } from "@reduxjs/toolkit";
-
-export interface CellCoordinates {
-  columnIndex: number;
-  rowIndex: number;
-}
 
 export interface BentoSettingsState {
   bento: Bento;

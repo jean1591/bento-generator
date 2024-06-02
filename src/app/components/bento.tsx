@@ -1,5 +1,5 @@
+import { CellCoordinates, classNames } from "@/utils";
 import {
-  CellCoordinates,
   setMergeButtonDisable,
   setSelectedCellOne,
   setSelectedCellTwo,
@@ -7,7 +7,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "../lib/store/store";
-import { classNames } from "@/utils";
 import { useEffect } from "react";
 
 export const Bento = () => {

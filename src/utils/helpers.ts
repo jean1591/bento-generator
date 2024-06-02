@@ -1,48 +1,89 @@
-import { BASE_BLOCK, Bento } from "./interface/bento";
+import { Bento, CellCoordinates } from "./interface/bento";
+import { cloneDeep, isNil } from "lodash";
 
-export const isLastColumn = (columnIndex: number, rowLength: number) =>
-  columnIndex === rowLength - 1;
-
-export const isLastRow = (rowIndex: number, bentoLength: number) =>
-  rowIndex === bentoLength - 1;
-
-export const shouldSkipBlock = (
+export const unMergeCells = (
   bento: Bento,
-  rowIndex: number,
-  columnIndex: number
-) =>
-  bento[rowIndex][columnIndex][0] === 0 &&
-  bento[rowIndex][columnIndex][1] === 0;
+  selectedCellOne: CellCoordinates
+): Bento => {
+  const [columnWidth, rowWidth] =
+    bento[selectedCellOne.rowIndex][selectedCellOne.columnIndex];
 
-export const isBlockAvailable = (
-  bento: Bento,
-  columIndex: number,
-  rowIndex: number
-) => bento[rowIndex][columIndex] === BASE_BLOCK;
+  const updatedBento = cloneDeep(bento);
 
-export const isLargerThan = (randomNumber: number, threshold: number) =>
-  randomNumber > threshold;
+  for (
+    let row = selectedCellOne.rowIndex;
+    row < selectedCellOne.rowIndex + rowWidth;
+    row++
+  ) {
+    for (
+      let column = selectedCellOne.columnIndex;
+      column < selectedCellOne.columnIndex + columnWidth;
+      column++
+    ) {
+      updatedBento[row][column] = [1, 1];
+    }
+  }
 
-export const canCreateColSpan3 = (
-  bento: Bento,
-  columIndex: number,
-  rowIndex: number
-) => {
-  return (
-    columIndex < bento[rowIndex].length - 2 &&
-    isBlockAvailable(bento, columIndex + 1, rowIndex) &&
-    isBlockAvailable(bento, columIndex + 2, rowIndex)
-  );
+  return updatedBento;
 };
 
-export const canCreateRowSpan3 = (
+export const mergeCells = (
   bento: Bento,
-  columIndex: number,
-  rowIndex: number
-) => {
+  selectedCellOne: CellCoordinates,
+  selectedCellTwo: CellCoordinates
+): Bento => {
+  const cellToUpdate: CellCoordinates = {
+    rowIndex: Math.min(selectedCellOne?.rowIndex, selectedCellTwo?.rowIndex),
+    columnIndex: Math.min(
+      selectedCellOne?.columnIndex,
+      selectedCellTwo?.columnIndex
+    ),
+  };
+  const cellToHide: CellCoordinates = {
+    rowIndex: Math.max(selectedCellOne?.rowIndex, selectedCellTwo?.rowIndex),
+    columnIndex: Math.max(
+      selectedCellOne?.columnIndex,
+      selectedCellTwo?.columnIndex
+    ),
+  };
+
+  const updatedBento = cloneDeep(bento);
+
+  const updatedLength = Math.max(
+    cellToHide.columnIndex - cellToUpdate.columnIndex + 1,
+    1
+  );
+  const updatedWidth = Math.max(
+    cellToHide.rowIndex - cellToUpdate.rowIndex + 1,
+    1
+  );
+
+  for (let row = cellToUpdate.rowIndex; row <= cellToHide.rowIndex; row++) {
+    for (
+      let column = cellToUpdate.columnIndex;
+      column <= cellToHide.columnIndex;
+      column++
+    ) {
+      updatedBento[row][column] = [0, 0];
+    }
+  }
+  updatedBento[cellToUpdate.rowIndex][cellToUpdate.columnIndex] = [
+    updatedLength,
+    updatedWidth,
+  ];
+
+  return updatedBento;
+};
+
+export const isCellOneSelectedAndNotCellTwo = (
+  bento: Bento,
+  selectedCellOne: CellCoordinates | null,
+  selectedCellTwo: CellCoordinates | null
+): boolean => {
   return (
-    rowIndex < bento.length - 2 &&
-    isBlockAvailable(bento, columIndex, rowIndex + 1) &&
-    isBlockAvailable(bento, columIndex, rowIndex + 2)
+    !isNil(selectedCellOne) &&
+    isNil(selectedCellTwo) &&
+    (bento[selectedCellOne.rowIndex][selectedCellOne.columnIndex][0] !== 1 ||
+      bento[selectedCellOne.rowIndex][selectedCellOne.columnIndex][1] !== 1)
   );
 };
