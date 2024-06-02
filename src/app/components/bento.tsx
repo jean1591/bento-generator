@@ -12,7 +12,7 @@ import { useEffect } from "react";
 
 export const Bento = () => {
   const dispatch = useDispatch();
-  const { bento, selectedCellOne, selectedCellTwo } = useSelector(
+  const { bento, columnNumber, selectedCellOne, selectedCellTwo } = useSelector(
     (state: RootState) => state.bentoSettings
   );
 
@@ -66,7 +66,17 @@ export const Bento = () => {
   }, [selectedCellOne, selectedCellTwo]);
 
   return (
-    <div className="mt-20 grid grid-cols-4 gap-5">
+    <div
+      className={classNames(
+        columnNumber === 3 ? "grid-cols-3" : "",
+        columnNumber === 4 ? "grid-cols-4" : "",
+        columnNumber === 5 ? "grid-cols-5" : "",
+        columnNumber === 6 ? "grid-cols-6" : "",
+        columnNumber === 7 ? "grid-cols-7" : "",
+        columnNumber === 8 ? "grid-cols-8" : "",
+        "mt-20 grid gap-5"
+      )}
+    >
       {bento.map((row, rowIndex) =>
         row.map((size, columnIndex) => {
           if (size[0] !== 0 && size[1] !== 0) {

@@ -6,6 +6,7 @@ import {
   setSelectedCellOne,
   setSelectedCellTwo,
 } from "./lib/store/features/bentoSettings/slice";
+import { SetColumnsNumber, SetRowsNumber } from "./components/setSize";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Bento } from "./components/bento";
@@ -75,7 +76,12 @@ export default function Home() {
 
   return (
     <div className="mt-20">
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center justify-start gap-x-10">
+          <SetColumnsNumber />
+          <SetRowsNumber />
+        </div>
+
         <Button
           label="Merge cells"
           buttonDisabled={mergeButtonDisable}

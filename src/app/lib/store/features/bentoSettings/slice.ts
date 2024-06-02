@@ -10,14 +10,18 @@ export interface CellCoordinates {
 
 export interface BentoSettingsState {
   bento: Bento;
+  columnNumber: number;
   mergeButtonDisable: boolean;
+  rowNumber: number;
   selectedCellOne: CellCoordinates | null;
   selectedCellTwo: CellCoordinates | null;
 }
 
 const initialState: BentoSettingsState = {
   bento: generateEmptyBento(4, 4),
+  columnNumber: 4,
   mergeButtonDisable: true,
+  rowNumber: 4,
   selectedCellOne: null,
   selectedCellTwo: null,
 };
@@ -44,12 +48,20 @@ export const bentoSettingsSlice = createSlice({
     ) => {
       state.selectedCellTwo = action.payload;
     },
+    setColumnNumber: (state, action: PayloadAction<number>) => {
+      state.columnNumber = action.payload;
+    },
+    setRowNumber: (state, action: PayloadAction<number>) => {
+      state.rowNumber = action.payload;
+    },
   },
 });
 
 export const {
   setBento,
+  setColumnNumber,
   setMergeButtonDisable,
+  setRowNumber,
   setSelectedCellOne,
   setSelectedCellTwo,
 } = bentoSettingsSlice.actions;
