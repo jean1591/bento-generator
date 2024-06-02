@@ -98,9 +98,7 @@ export const Bento = () => {
                 )}
                 onClick={() => handleCellOnClick(rowIndex, columnIndex)}
               >
-                <p className="text-center text-black">
-                  {`P(${columnIndex}, ${rowIndex}) - S(${size[0]}, ${size[1]})`}
-                </p>
+                <p className="text-center text-black"></p>
               </div>
             );
           }

@@ -1,7 +1,7 @@
 import { Bento, CellCoordinates } from "./interface/bento";
 import { cloneDeep, isNil } from "lodash";
 
-export const unMergeCells = (
+export const RestoreCells = (
   bento: Bento,
   selectedCellOne: CellCoordinates
 ): Bento => {

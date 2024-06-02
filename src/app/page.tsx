@@ -1,11 +1,11 @@
 "use client";
 
-import { SetColumnsNumber, SetRowsNumber } from "./components/setSize";
 import {
+  RestoreCells,
   isCellOneSelectedAndNotCellTwo,
   mergeCells,
-  unMergeCells,
 } from "@/utils";
+import { SetColumnsNumber, SetRowsNumber } from "./components/setSize";
 import {
   setBento,
   setSelectedCellOne,
@@ -30,16 +30,20 @@ export default function Home() {
     dispatch(setSelectedCellTwo(null));
   };
 
+  const canRestoreCells = isCellOneSelectedAndNotCellTwo(
+    bento,
+    selectedCellOne,
+    selectedCellTwo
+  );
+
   const handleMerge = () => {
     if (!selectedCellOne && !selectedCellTwo) {
       return;
     }
 
-    if (
-      isCellOneSelectedAndNotCellTwo(bento, selectedCellOne, selectedCellTwo)
-    ) {
+    if (canRestoreCells) {
       // @ts-expect-error selectedCellOne !== null checked in isCellOneSelectedAndNotCellTwo
-      const updatedBento = unMergeCells(bento, selectedCellOne);
+      const updatedBento = RestoreCells(bento, selectedCellOne);
 
       dispatch(setBento(updatedBento));
       resetSelectedCells();
@@ -67,7 +71,7 @@ export default function Home() {
         </div>
 
         <Button
-          label="Merge cells"
+          label={canRestoreCells ? "Restore cells" : "Merge cells"}
           buttonDisabled={mergeButtonDisable}
           onClick={handleMerge}
         />
