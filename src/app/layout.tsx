@@ -19,7 +19,7 @@ export default function RootLayout({
             "bg-base-color text-base-content-500"
           )}
         >
-          <div className="py-8 mx-auto max-w-5xl px-4 mb-16">{children}</div>
+          <div className="my-16 px-4 mx-auto max-w-5xl">{children}</div>
         </body>
       </html>
     </StoreProvider>

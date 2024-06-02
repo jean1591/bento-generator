@@ -1,6 +1,7 @@
 "use client";
 
 import { Bento } from "./components/bento";
+import { Hero } from "./components/hero";
 import { Settings } from "./components/settings";
 import { Toast } from "./components/toast";
 
@@ -8,8 +9,10 @@ import { Toast } from "./components/toast";
 
 export default function Home() {
   return (
-    <div className="mt-20">
+    <div>
       <Toast />
+
+      <Hero />
 
       <div className="mt-20">
         <Settings />

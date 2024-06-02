@@ -117,10 +117,16 @@ const classNamesGenerator = (
 ) => {
   return classNames(
     // size[0] is column span
+    size[0] === 7 ? "col-span-7" : "",
+    size[0] === 6 ? "col-span-6" : "",
+    size[0] === 5 ? "col-span-5" : "",
     size[0] === 4 ? "col-span-4" : "",
     size[0] === 3 ? "col-span-3" : "",
     size[0] === 2 ? "col-span-2" : "",
     // size[1] is row span
+    size[1] === 7 ? "row-span-7" : "",
+    size[1] === 6 ? "row-span-6" : "",
+    size[1] === 5 ? "row-span-5" : "",
     size[1] === 4 ? "row-span-4" : "",
     size[1] === 3 ? "row-span-3" : "",
     size[1] === 2 ? "row-span-2" : "",
