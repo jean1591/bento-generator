@@ -60,6 +60,13 @@ export const Bento = () => {
   useEffect(() => {
     if (selectedCellOne && selectedCellTwo) {
       dispatch(setMergeButtonDisable(false));
+    } else if (
+      selectedCellOne &&
+      !selectedCellTwo &&
+      (bento[selectedCellOne.rowIndex][selectedCellOne.columnIndex][0] !== 1 ||
+        bento[selectedCellOne.rowIndex][selectedCellOne.columnIndex][1] !== 1)
+    ) {
+      dispatch(setMergeButtonDisable(false));
     } else {
       dispatch(setMergeButtonDisable(true));
     }

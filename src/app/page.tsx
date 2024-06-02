@@ -22,6 +22,43 @@ export default function Home() {
     useSelector((state: RootState) => state.bentoSettings);
 
   const handleMerge = () => {
+    if (!selectedCellOne && !selectedCellTwo) {
+      return;
+    }
+
+    if (
+      selectedCellOne &&
+      !selectedCellTwo &&
+      (bento[selectedCellOne.rowIndex][selectedCellOne.columnIndex][0] !== 1 ||
+        bento[selectedCellOne.rowIndex][selectedCellOne.columnIndex][1] !== 1)
+    ) {
+      const [columnWidth, rowWidth] =
+        bento[selectedCellOne.rowIndex][selectedCellOne.columnIndex];
+
+      const updatedBento = cloneDeep(bento);
+
+      for (
+        let row = selectedCellOne.rowIndex;
+        row < selectedCellOne.rowIndex + rowWidth;
+        row++
+      ) {
+        for (
+          let column = selectedCellOne.columnIndex;
+          column < selectedCellOne.columnIndex + columnWidth;
+          column++
+        ) {
+          updatedBento[row][column] = [1, 1];
+        }
+      }
+
+      dispatch(setBento(updatedBento));
+
+      dispatch(setSelectedCellOne(null));
+      dispatch(setSelectedCellTwo(null));
+
+      return;
+    }
+
     if (!selectedCellOne || !selectedCellTwo) {
       return;
     }
