@@ -8,7 +8,7 @@ export const Hero = () => {
         <p>without the hassle</p>
       </div>
 
-      <p className="mt-4 text-left text-base-content-400 text-lg font-normal leading-7">
+      <p className="mt-4 text-left text-base-content-400 text-lg font-normal leading-7 w-2/3">
         The ultimate developer tool for Tailwind projects. Say goodbye to the
         hassle of manually creating bentos, effortlessly merge cells, add rows
         and columns, customize your grid, and seamlessly export clean HTML.
