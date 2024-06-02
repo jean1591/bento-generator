@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Bento } from "./components/bento";
 import { Button } from "./components/button";
 import { RootState } from "./lib/store/store";
+import { Toast } from "./components/toast";
 
 // TODO: full line [0, 0] not handled
 
@@ -58,6 +59,7 @@ export default function Home() {
 
   return (
     <div className="mt-20">
+      <Toast />
       <div className="flex items-center justify-between">
         <div className="flex items-center justify-start gap-x-10">
           <SetColumnsNumber />
