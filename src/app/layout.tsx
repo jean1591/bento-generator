@@ -16,7 +16,7 @@ export default function RootLayout({
         <body
           className={classNames(
             inter.className,
-            "bg-base-color text-base-content-500"
+            "bg-indigo-50/25 text-indigo-950"
           )}
         >
           <div className="my-16 px-4 mx-auto max-w-5xl">{children}</div>

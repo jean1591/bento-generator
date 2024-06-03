@@ -98,7 +98,7 @@ export const Bento = () => {
                 )}
                 onClick={() => handleCellOnClick(rowIndex, columnIndex)}
               >
-                <p className="text-center text-base-content-500"></p>
+                <p className="text-center"></p>
               </div>
             );
           }
@@ -132,8 +132,8 @@ const classNamesGenerator = (
     size[1] === 2 ? "row-span-2" : "",
     isCellCurrentCell(cellOne, rowIndex, columnIndex) ||
       isCellCurrentCell(cellTwo, rowIndex, columnIndex)
-      ? "bg-primary-500 shadow-2xl"
-      : "bg-primary-200 shadow-sm",
+      ? "bg-indigo-950/80 shadow-2xl"
+      : "bg-indigo-950/30 shadow-sm",
     "min-h-20 transition ease-in-out duration-500 rounded-lg"
   );
 };

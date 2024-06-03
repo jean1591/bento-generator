@@ -13,8 +13,8 @@ export const Button = ({
     <button
       disabled={buttonDisabled}
       className={classNames(
-        buttonDisabled ? "bg-primary-200" : "bg-primary-500",
-        "text-base text-center text-base-color px-7 py-3 rounded-lg"
+        buttonDisabled ? "bg-indigo-950/30" : "bg-indigo-950/80",
+        "text-base text-center text-indigo-50 px-7 py-3 rounded-lg"
       )}
       onClick={onClick}
     >

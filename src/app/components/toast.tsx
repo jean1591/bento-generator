@@ -40,17 +40,16 @@ export const Toast = () => {
               <div className="p-4">
                 <div className="flex items-start">
                   <div className="w-0 flex-1 pt-0.5">
-                    <p className="text-sm font-medium text-base-content-500">
-                      {title}
-                    </p>
-                    <p className="mt-1 text-sm text-base-content-300">
-                      {message}
-                    </p>
+                    <p className="text-sm font-medium">{title}</p>
+                    <p className="mt-1 text-sm text-indigo-950/80">{message}</p>
                   </div>
                   <div className="ml-4 flex flex-shrink-0">
                     <button
                       type="button"
-                      className="inline-flex rounded-md bg-red-100 text-base-content-300 hover:text-base-content-500"
+                      className={classNames(
+                        color === "red" ? "bg-red-100" : "bg-green-100",
+                        "inline-flex rounded-md text-indigo-950/80 hover:text-text-indigo-950"
+                      )}
                       onClick={() => {
                         dispatch(setDisplayToast(false));
                       }}

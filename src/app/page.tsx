@@ -18,7 +18,7 @@ export default function Home() {
         <Settings />
       </div>
 
-      <div className="mt-12 p-8 border border-base-content-300 rounded-lg shadow-xl">
+      <div className="mt-12 p-8 border border-indigo-950/50 rounded-lg shadow-xl">
         <Bento />
       </div>
     </div>
