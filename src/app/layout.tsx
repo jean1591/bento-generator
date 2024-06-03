@@ -1,5 +1,6 @@
 import "./globals.css";
 
+import { Footer } from "./components/footer";
 import { Inter } from "next/font/google";
 import { StoreProvider } from "./lib/store/storeProvider";
 import { classNames } from "@/utils";
@@ -19,7 +20,10 @@ export default function RootLayout({
             "bg-indigo-50/25 text-indigo-950"
           )}
         >
-          <div className="my-16 px-4 mx-auto max-w-5xl">{children}</div>
+          <div className="my-16 px-4 mx-auto max-w-5xl min-h-screen">
+            {children}
+          </div>
+          <Footer />
         </body>
       </html>
     </StoreProvider>
