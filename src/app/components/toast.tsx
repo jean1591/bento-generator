@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { PiX } from "react-icons/pi";
 import { RootState } from "../lib/store/store";
 import { Transition } from "@headlessui/react";
+import { classNames } from "@/utils";
 import { setDisplayToast } from "../lib/store/features/bentoSettings/slice";
 
 export const Toast = () => {
   const dispatch = useDispatch();
-  const { displayToast, errorMessage } = useSelector(
-    (state: RootState) => state.bentoSettings
-  );
+  const {
+    displayToast,
+    toastDetails: { color, message, title },
+  } = useSelector((state: RootState) => state.bentoSettings);
 
   return (
     <>
@@ -27,15 +29,22 @@ export const Toast = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg bg-red-100 border border-red-300 shadow-lg ring-1 ring-black ring-opacity-5">
+            <div
+              className={classNames(
+                color === "red"
+                  ? "bg-red-100 border-red-300"
+                  : "bg-green-100 border-green-300",
+                "pointer-events-auto w-full max-w-sm overflow-hidden rounded-lg border shadow-lg ring-1 ring-black ring-opacity-5"
+              )}
+            >
               <div className="p-4">
                 <div className="flex items-start">
                   <div className="w-0 flex-1 pt-0.5">
                     <p className="text-sm font-medium text-base-content-500">
-                      An error occured 😱
+                      {title}
                     </p>
                     <p className="mt-1 text-sm text-base-content-300">
-                      {errorMessage}
+                      {message}
                     </p>
                   </div>
                   <div className="ml-4 flex flex-shrink-0">

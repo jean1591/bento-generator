@@ -1,28 +1,30 @@
 import { Bento, CellCoordinates, generateEmptyBento } from "@/utils";
 
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { ToastDetails } from "@/utils/interface/toast";
+import { cannotMergeColumnToast } from "@/utils/toastConstant";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface BentoSettingsState {
   bento: Bento;
   columnNumber: number;
   displayToast: boolean;
-  errorMessage: string | null;
   mergeButtonDisable: boolean;
   rowNumber: number;
   selectedCellOne: CellCoordinates | null;
   selectedCellTwo: CellCoordinates | null;
+  toastDetails: ToastDetails;
 }
 
 const initialState: BentoSettingsState = {
   bento: generateEmptyBento(4, 4),
   columnNumber: 4,
   displayToast: false,
-  errorMessage: null,
   mergeButtonDisable: true,
   rowNumber: 4,
   selectedCellOne: null,
   selectedCellTwo: null,
+  toastDetails: cannotMergeColumnToast,
 };
 
 export const bentoSettingsSlice = createSlice({
@@ -53,11 +55,11 @@ export const bentoSettingsSlice = createSlice({
     setRowNumber: (state, action: PayloadAction<number>) => {
       state.rowNumber = action.payload;
     },
-    setErrorMessage: (state, action: PayloadAction<string | null>) => {
-      state.errorMessage = action.payload;
-    },
     setDisplayToast: (state, action: PayloadAction<boolean>) => {
       state.displayToast = action.payload;
+    },
+    setToastDetails: (state, action: PayloadAction<ToastDetails>) => {
+      state.toastDetails = action.payload;
     },
   },
 });
@@ -66,11 +68,11 @@ export const {
   setBento,
   setColumnNumber,
   setDisplayToast,
-  setErrorMessage,
   setMergeButtonDisable,
   setRowNumber,
   setSelectedCellOne,
   setSelectedCellTwo,
+  setToastDetails,
 } = bentoSettingsSlice.actions;
 
 export default bentoSettingsSlice.reducer;

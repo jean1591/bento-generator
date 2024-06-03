@@ -7,9 +7,9 @@ import {
 import {
   setBento,
   setDisplayToast,
-  setErrorMessage,
   setSelectedCellOne,
   setSelectedCellTwo,
+  setToastDetails,
 } from "../lib/store/features/bentoSettings/slice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -17,6 +17,7 @@ import { Bento } from "./bento";
 import { Button } from "./button";
 import { RootState } from "../lib/store/store";
 import { StoreProvider } from "../lib/store/storeProvider";
+import { codeCopiedToast } from "@/utils/toastConstant";
 import { renderToStaticMarkup } from "react-dom/server";
 
 export const Settings = () => {
@@ -37,7 +38,7 @@ export const Settings = () => {
   );
 
   const handleOnCopy = () => {
-    dispatch(setErrorMessage("Code successfully copied !"));
+    dispatch(setToastDetails(codeCopiedToast));
     dispatch(setDisplayToast(true));
 
     navigator.clipboard.writeText(

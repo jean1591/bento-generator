@@ -1,10 +1,14 @@
 import { canDeleteLastColumn, canDeleteLastRow } from "@/utils";
 import {
+  cannotMergeColumnToast,
+  cannotMergeRowToast,
+} from "@/utils/toastConstant";
+import {
   setBento,
   setColumnNumber,
   setDisplayToast,
-  setErrorMessage,
   setRowNumber,
+  setToastDetails,
 } from "../lib/store/features/bentoSettings/slice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -30,7 +34,7 @@ export const SetColumnsNumber = () => {
 
         dispatch(setBento(updatedBento));
       } else {
-        dispatch(setErrorMessage("Cannot delete column with merged cells"));
+        dispatch(setToastDetails(cannotMergeColumnToast));
         dispatch(setDisplayToast(true));
 
         setTimeout(() => {
@@ -84,7 +88,7 @@ export const SetRowsNumber = () => {
 
         dispatch(setBento(updatedBento));
       } else {
-        dispatch(setErrorMessage("Cannot delete row with merged cells"));
+        dispatch(setToastDetails(cannotMergeRowToast));
         dispatch(setDisplayToast(true));
 
         setTimeout(() => {
