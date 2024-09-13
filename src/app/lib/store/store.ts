@@ -1,9 +1,9 @@
-import bentoSettingsReducer from "./features/bentoSettings/slice";
+import bentoReducer from "./features/bento/slice";
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
   reducer: {
-    bentoSettings: bentoSettingsReducer,
+    bento: bentoReducer,
   },
 });
 

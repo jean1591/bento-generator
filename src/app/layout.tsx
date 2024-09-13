@@ -1,6 +1,5 @@
 import "./globals.css";
 
-import { Footer } from "./components/footer";
 import { Inter } from "next/font/google";
 import { Metadata } from "next";
 import { StoreProvider } from "./lib/store/storeProvider";
@@ -42,15 +41,9 @@ export default function RootLayout({
     <StoreProvider>
       <html lang="fr" suppressHydrationWarning>
         <body
-          className={classNames(
-            inter.className,
-            "bg-indigo-50/25 text-indigo-950"
-          )}
+          className={classNames(inter.className, "bg-slate-950 text-blue-50")}
         >
-          <div className="my-16 px-4 mx-auto max-w-5xl min-h-screen">
-            {children}
-          </div>
-          <Footer />
+          <div className="min-h-screen">{children}</div>
         </body>
       </html>
     </StoreProvider>

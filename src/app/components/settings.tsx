@@ -1,103 +1,38 @@
-import { SetColumnsNumber, SetRowsNumber } from "./setSize";
-import {
-  isCellOneSelectedAndNotCellTwo,
-  mergeCells,
-  restoreCells,
-} from "@/utils";
-import {
-  setBento,
-  setDisplayToast,
-  setSelectedCellOne,
-  setSelectedCellTwo,
-  setToastDetails,
-} from "../lib/store/features/bentoSettings/slice";
-import { useDispatch, useSelector } from "react-redux";
-
-import { Bento } from "./bento";
-import { Button } from "./button";
-import { RootState } from "../lib/store/store";
-import { StoreProvider } from "../lib/store/storeProvider";
-import { codeCopiedToast } from "@/utils/toastConstant";
-import { renderToStaticMarkup } from "react-dom/server";
+import { ColourPicker } from "./settings/ColourPicker";
+import { SizeSelector } from "./settings/SizeSelector";
+import { TextInput } from "./settings/TextInput";
+import { UppercaseSelector } from "./settings/UppercaseSelector";
 
 export const Settings = () => {
-  const dispatch = useDispatch();
-
-  const { bento, mergeButtonDisable, selectedCellOne, selectedCellTwo } =
-    useSelector((state: RootState) => state.bentoSettings);
-
-  const resetSelectedCells = () => {
-    dispatch(setSelectedCellOne(null));
-    dispatch(setSelectedCellTwo(null));
-  };
-
-  const canRestoreCells = isCellOneSelectedAndNotCellTwo(
-    bento,
-    selectedCellOne,
-    selectedCellTwo
-  );
-
-  const handleOnCopy = () => {
-    dispatch(setToastDetails(codeCopiedToast));
-    dispatch(setDisplayToast(true));
-
-    navigator.clipboard.writeText(
-      renderToStaticMarkup(
-        <StoreProvider>
-          <Bento />
-        </StoreProvider>
-      )
-    );
-
-    setTimeout(() => {
-      dispatch(setDisplayToast(false));
-    }, 5000);
-  };
-
-  const handleMerge = () => {
-    if (!selectedCellOne && !selectedCellTwo) {
-      return;
-    }
-
-    if (canRestoreCells) {
-      // @ts-expect-error selectedCellOne !== null checked in isCellOneSelectedAndNotCellTwo
-      const updatedBento = restoreCells(bento, selectedCellOne);
-
-      dispatch(setBento(updatedBento));
-      resetSelectedCells();
-
-      return;
-    }
-
-    if (selectedCellOne && selectedCellTwo) {
-      const updatedBento = mergeCells(bento, selectedCellOne, selectedCellTwo);
-
-      dispatch(setBento(updatedBento));
-      resetSelectedCells();
-    }
-
-    return;
-  };
-
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center justify-start gap-x-10">
-        <SetColumnsNumber />
-        <SetRowsNumber />
-      </div>
+    <div className="overflow-auto h-screen bg-blue-50 text-blue-950 rounded-3xl md:rounded-e-none">
+      <div className="py-12 px-4 space-y-8">
+        <div className="space-y-4">
+          <TextInput title="Title" />
+          <SizeSelector title="font size" />
+          <ColourPicker label="text colour" />
+          <UppercaseSelector />
+        </div>
 
-      <div className="flex items-center justify-end gap-x-10">
-        <Button
-          label={canRestoreCells ? "Restore cells" : "Merge cells"}
-          buttonDisabled={mergeButtonDisable}
-          onClick={handleMerge}
-        />
+        <div className="space-y-4">
+          <TextInput title="Label" />
+          <SizeSelector title="font size" />
+          <ColourPicker label="text colour" />
+          <UppercaseSelector />
+        </div>
 
-        <Button
-          label={"Get the code"}
-          buttonDisabled={false}
-          onClick={handleOnCopy}
-        />
+        <div>
+          <p className="text-xl font-medium leading-none tracking-tight">
+            Cell
+          </p>
+          <div className="mt-4 space-y-4">
+            <ColourPicker label="background" />
+            <SizeSelector title="radius" />
+            <ColourPicker label="radius colour" />
+            <SizeSelector title="shadow" />
+            <SizeSelector title="border" />
+          </div>
+        </div>
       </div>
     </div>
   );
