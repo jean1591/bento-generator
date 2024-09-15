@@ -1,25 +1,15 @@
-"use client";
-
-import { Bento } from "./components/bento";
-import { Hero } from "./components/hero";
+import { Grid } from "./components/Grid";
 import { Settings } from "./components/settings";
-import { Toast } from "./components/toast";
-
-// TODO: full line [0, 0] not handled
 
 export default function Home() {
   return (
-    <div>
-      <Toast />
-
-      <Hero />
-
-      <div className="mt-20">
-        <Settings />
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 p-4 md:p-0 space-y-8 md:space-y-0">
+      <div className="col-span-1 md:col-span-2 lg:col-span-3 flex items-center justify-center">
+        <Grid />
       </div>
 
-      <div className="mt-12 p-8 border border-indigo-950/50 rounded-lg shadow-xl">
-        <Bento />
+      <div className="col-span-1">
+        <Settings />
       </div>
     </div>
   );
