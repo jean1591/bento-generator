@@ -8,14 +8,14 @@ export const Settings = () => {
     <div className="overflow-auto h-screen bg-blue-50 text-blue-950 rounded-3xl md:rounded-e-none">
       <div className="py-12 px-4 space-y-8">
         <div className="space-y-4">
-          <TextInput title="Title" />
+          <TextInput title="Title" type="title" />
           <SizeSelector title="font size" />
           <ColourPicker label="text colour" />
           <UppercaseSelector />
         </div>
 
         <div className="space-y-4">
-          <TextInput title="Label" />
+          <TextInput title="Label" type="label" />
           <SizeSelector title="font size" />
           <ColourPicker label="text colour" />
           <UppercaseSelector />
